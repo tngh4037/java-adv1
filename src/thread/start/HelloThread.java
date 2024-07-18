@@ -9,5 +9,5 @@ public class HelloThread extends Thread { // Thread 클래스를 상속한다.
 }
 
 // 참고)
-// - Thread.currentThread() 를 호출하면 해당 코드를 실행하는 스레드 객체를 조회할 수 있다.
+// - Thread.currentThread() 를 호출하면, 해당 코드를 실행하는 스레드 객체를 얻어낼(조회할) 수 있다.
 // - Thread.currentThread().getName(): 현재 실행 중인 스레드의 이름을 조회한다.
