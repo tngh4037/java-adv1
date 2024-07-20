@@ -40,3 +40,7 @@ public class ThreadStopMainV2 {
 // 인터럽트가 적용되고, 인터럽트 예외가 발생하면, 해당 스레드는 실행 가능 상태가 되고, 인터럽트 발생 상태도 정상으로 돌아온다.(false)
 //
 // 참고) interrupt() 를 호출했다고 해서 즉각 InterruptedException 이 발생하는 것은 아니다. 오직 sleep() 처럼 InterruptedException 을 던지는 메서드를 호출 하거나 또는 호출 중일 때 예외가 발생한다.
+
+//
+// [아쉬운 점]
+// sleep() 을 호출하고 나서야 인터럽트가 발생한다. while 문 조건에서 부터 while (인터럽트_상태_확인) { .. } 로 하면 더 빨리 반응할 수도 있을 것 같다. ( ThreadStopMainV3 )
