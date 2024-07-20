@@ -38,3 +38,5 @@ public class ThreadStopMainV4 {
         }
     }
 }
+
+// 참고) 인터럽트 활용 예시) printer 패키지 참고
