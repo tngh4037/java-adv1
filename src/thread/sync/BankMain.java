@@ -8,7 +8,8 @@ public class BankMain {
     public static void main(String[] args) throws InterruptedException {
         // BankAccount account = new BankAccountV1(1000); // 계좌에 1000원이 있다고 가정
         // BankAccount account = new BankAccountV2(1000); // 계좌에 1000원이 있다고 가정
-        BankAccount account = new BankAccountV3(1000); // 계좌에 1000원이 있다고 가정
+        // BankAccount account = new BankAccountV3(1000); // 계좌에 1000원이 있다고 가정
+        BankAccount account = new BankAccountV4(1000); // 계좌에 1000원이 있다고 가정
 
         Thread t1 = new Thread(new WithdrawTask(account, 800), "t1"); // 계좌에서 800원 출금
         Thread t2 = new Thread(new WithdrawTask(account, 800), "t2"); // 계좌에서 800원 출금
