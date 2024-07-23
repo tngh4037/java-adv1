@@ -20,7 +20,7 @@ public class LockSupportMainV2 {
         @Override
         public void run() {
             log("park 시작");
-            LockSupport.parkNanos(2000_000000); // parkNanos(2초) 사용 | RUNNABLE -> TIMED_WAITING
+            LockSupport.parkNanos(2000_000000); // parkNanos(2초) 사용 | RUNNABLE -> TIMED_WAITING | (2초 뒤) TIMED_WAITING -> RUNNABLE
             log("park 종료, state: " + Thread.currentThread().getState());
             log("인터럽트 상태: " + Thread.currentThread().isInterrupted());
         }
