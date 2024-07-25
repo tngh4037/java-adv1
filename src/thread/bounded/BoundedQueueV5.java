@@ -8,28 +8,29 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static util.MyLogger.log;
 
-public class BoundedQueueV4 implements BoundedQueue {
+// 하나의 락에 대해, 대기 공간 분리
+public class BoundedQueueV5 implements BoundedQueue {
 
     private final Lock lock = new ReentrantLock();
-    private final Condition condition = lock.newCondition(); // 스레드 대기 집합
+    private final Condition producerCond = lock.newCondition(); // 생산자 스레드 대기 공간
+    private final Condition consumerCond = lock.newCondition(); // 소비자 스레드 대기 공간
 
     private final Queue<String> queue = new ArrayDeque<>();
     private final int max;
 
-    public BoundedQueueV4(int max) {
+    public BoundedQueueV5(int max) {
         this.max = max;
     }
 
     @Override
-    public /* synchronized */ void put(String data) {
+    public void put(String data) {
         lock.lock();
 
         try {
             while (queue.size() == max) {
                 log("[put] 큐가 가득 참, 생산자 대기");
                 try {
-                    // wait();
-                    condition.await(); // condition 안에서 대기한다.
+                    producerCond.await(); // condition(생산자 용) 안에서 대기한다.
                     log("[put] 생산자 깨어남");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -37,9 +38,8 @@ public class BoundedQueueV4 implements BoundedQueue {
             }
 
             queue.offer(data);
-            log("[put] 생산자 데이터 저장, condition.signal() 호출");
-            // notify();
-            condition.signal(); // condition 안에서 대기하던 쓰레드를 깨운다.
+            log("[put] 생산자 데이터 저장, consumerCond.signal() 호출");
+            consumerCond.signal(); // condition(소비자 용) 안에서 대기하던 쓰레드를 깨운다.
         } finally {
 
             lock.unlock();
@@ -47,15 +47,14 @@ public class BoundedQueueV4 implements BoundedQueue {
     }
 
     @Override
-    public /* synchronized */ String take() {
+    public String take() {
         lock.lock();
 
         try {
             while (queue.isEmpty()) {
                 log("[take] 큐에 데이터가 없음, 소비자 대기");
                 try {
-                    // wait();
-                    condition.await(); // condition 안에서 대기한다.
+                    consumerCond.await(); // condition(소비자 용) 안에서 대기한다.
                     log("[take] 소비자 깨어남");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -63,9 +62,8 @@ public class BoundedQueueV4 implements BoundedQueue {
             }
 
             String data = queue.poll();
-            log("[take] 소비자 데이터 획득, condition.signal() 호출");
-            // notify();
-            condition.signal(); // condition 안에서 대기하던 쓰레드를 깨운다.
+            log("[take] 소비자 데이터 획득, consumerCond.signal() 호출");
+            producerCond.signal(); // condition(생산자 용) 안에서 대기하던 쓰레드를 깨운다.
 
             return data;
         } finally {
@@ -79,3 +77,5 @@ public class BoundedQueueV4 implements BoundedQueue {
         return queue.toString();
     }
 }
+
+// 생산자가 생산자를 깨우고, 소비자가 소비자를 깨우는 비효율 문제 해결.
