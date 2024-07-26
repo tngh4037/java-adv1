@@ -10,6 +10,8 @@ public class IncrementThreadMain {
 
     public static void main(String[] args) throws InterruptedException {
         test(new BasicInteger());
+        test(new VolatileInteger());
+        test(new SyncInteger());
     }
 
     private static void test(IncrementInteger incrementInteger) throws InterruptedException {
