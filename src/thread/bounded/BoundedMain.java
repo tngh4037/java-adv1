@@ -15,11 +15,14 @@ public class BoundedMain {
         // BoundedQueue queue = new BoundedQueueV3(2);
         // BoundedQueue queue = new BoundedQueueV4(2);
         // BoundedQueue queue = new BoundedQueueV5(2);
-        BoundedQueue queue = new BoundedQueueV6_1(2);
+        // BoundedQueue queue = new BoundedQueueV6_1(2);
+        // BoundedQueue queue = new BoundedQueueV6_2(2);
+        // BoundedQueue queue = new BoundedQueueV6_3(2);
+        BoundedQueue queue = new BoundedQueueV6_4(2);
 
         // 2. 생산자, 소비자 실행 순서 선택, 반드시 하나만 선택해서 실행하자.
-        // producerFirst(queue); // 2-1) 생산자 먼저 실행
-        consumerFirst(queue); // 2-2) 소비자 먼저 실행
+        producerFirst(queue); // 2-1) 생산자 먼저 실행
+        // consumerFirst(queue); // 2-2) 소비자 먼저 실행
     }
 
     private static void producerFirst(BoundedQueue queue) {
