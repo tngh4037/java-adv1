@@ -6,7 +6,9 @@ public class SimpleListMainV2 {
 
     public static void main(String[] args) throws InterruptedException {
         // test(new BasicList());
-        test(new SyncList());
+        // test(new SyncList());
+
+        test(new SyncProxyList(new BasicList()));
     }
 
     private static void test(SimpleList list) throws InterruptedException {
@@ -41,6 +43,3 @@ public class SimpleListMainV2 {
         log(list);
     }
 }
-
-// 컬렉션 프레임워크 대부분은 스레드 세이프 하지 않다.
-// 멀티스레드 상황에서 여러 스레드가 동시에 컬렉션에 접근하는 경우라면 java.util 패키지가 제공하는 일반적인 컬렉션들은 사용하면 안된다.
