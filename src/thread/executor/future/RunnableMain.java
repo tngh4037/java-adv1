@@ -24,7 +24,7 @@ public class RunnableMain {
         public void run() {
             log("Runnable 시작");
             sleep(2000); // 작업에 대략 2초 정도 소요된다고 가정
-            value = new Random().nextInt(10);// 0 ~ 9 사이 리턴
+            value = new Random().nextInt(10); // 0 ~ 9 사이 리턴
             log("create value = " + value);
             log("Runnable 완료");
         }
