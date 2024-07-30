@@ -8,6 +8,7 @@ import java.util.concurrent.*;
 import static util.MyLogger.log;
 import static util.ThreadUtils.sleep;
 
+// Executor 스레드 풀 관리
 public class PoolSizeMainV1 {
 
     public static void main(String[] args) {
